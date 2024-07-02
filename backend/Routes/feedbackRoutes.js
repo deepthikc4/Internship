@@ -8,16 +8,21 @@ router.use(express.json());
 // to enter feedback form
 
 
-router.post('/',async(req,res)=>{
+router.post('/addfeedback',async(req,res)=>{
     try {
         const data=req.body;
-        let newUser=await users(data).save();
-        console.log(newUser);
-        res.status(200).send(`data added`);
+        let newfeedback=await feedback(data).save();
+        console.log(newfeedback);
+        if(newfeedback)
+            {
+            
+            res.status(200).send({Message:'‘Thank you for your valuable feedback.'})
+         }
     } catch (error) {
-        console.log(error);
+        res.status(400).send({Message:'failed'})
     }
 })
+
 
 
 

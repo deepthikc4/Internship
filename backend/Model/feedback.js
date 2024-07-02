@@ -2,13 +2,15 @@ const mongoose=require('mongoose');
 
 // create schema
 const feedbackSchema = mongoose.Schema({
-    courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+    // courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+    courseId:String,
     question1: Number,
     question2: Number,
     question3: Number,
     question4: Number,
+    like: String,
     additionalComments: String,
-    finalFeedback: Number,
+    finalFeedback: Number
   });
 
 // map to collection

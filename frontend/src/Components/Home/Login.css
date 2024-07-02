@@ -33,11 +33,13 @@ align-items: center;
 font-weight: 700;
 border-radius: 20px;
 margin-right: 1rem;
-
+background-color: navy;
 width: 100%;
 }
 .imagecontainer{
-    background-image: url('../images/cover.jpg');
+    background-image: url('../images/cover5.jpg');
+    background-size: cover;
+  background-attachment: fixed;
 
-    height: 300px;
+    height: 400px;
 }

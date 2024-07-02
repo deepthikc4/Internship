@@ -5,7 +5,7 @@ const Login = () => {
   return (
     <div>
         <div className="imagecontainer ">
-        <h3 className='text-center text-light p-6  '>Login to your Account</h3>
+        <h3 className='text-center text-light p-6' style={{paddingTop:"300px",fontSize:"40px"}}>Login Page</h3>
 
         </div>
 
@@ -21,8 +21,8 @@ const Login = () => {
     <input type="password" class="form-control input" id="exampleInputPassword1" placeholder="Password"/>
   </div> 
  
-  <button type="submit" class="btn btn-dark text-light buttons">Submit</button>
-  <button type="submit" class="btn  text-danger mt-3 mx-auto d-block">Don't have account? Sign Up Now </button>
+  <button type="submit" class="btn  text-light buttons">Submit</button>
+  {/* <button type="submit" class="btn  text-danger mt-3 mx-auto d-block">Don't have account? Sign Up Now </button> */}
 
 </form>
 
