@@ -1,3 +1,34 @@
+
+const express=require('express');
+const router=express.Router();
+router.use(express.json());
+const user=require('../Model/user')
+
+
+router.post('/login',async(req,res)=>{
+
+    let email=req.body.email;
+    let password=req.body.password;
+    let loginuser= await user.findOne({email:email});
+    if(!loginuser)
+    {
+        return res.status(404).send({Message:"Email not found"});
+    }
+    try {
+        if(loginuser.password===password){
+            return res.status(200).send({Message:'login successful',role:loginuser.role});
+        }
+        else{
+            return res.status(500).send({Message:"password not valid"});
+        }
+        
+    } catch (error) {
+        res.status(404).send({Message:"No user Found"});
+    }
+})
+module.exports=router;
+
+
 // const express=require('express');
 // const router=express.Router();
 // const jwt=require('jsonwebtoken');

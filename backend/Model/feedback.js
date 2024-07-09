@@ -13,7 +13,7 @@ const feedbackSchema = mongoose.Schema({
     finalFeedback: Number
   });
 
-// map to collection
+
 
 const feedbackModel=mongoose.model('feedback',feedbackSchema);
 module.exports=feedbackModel;

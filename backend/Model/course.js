@@ -10,11 +10,9 @@ const courseSchema = new mongoose.Schema({
     endDate: Date,
     batchCount: Number,
     trainerName: String,
-    status: { type: String, enum: ['Upcoming', 'Ongoing', 'Completed', 'Cancelled', 'Hold'] },
+    status: { type: String, enum: ['Hold', 'Ongoing', 'Completed', 'Cancelled', 'Upcoming'] },
     finalFeedback: Number,
   });
-
-// map to collection
 
 const courseModel=mongoose.model('course',courseSchema);
 module.exports=courseModel;

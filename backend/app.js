@@ -8,6 +8,8 @@ app.use(morgan('dev'));
 
 
 const feedbackRoute=require('./Routes/feedbackRoutes');
+const CourseRoute=require('./Routes/courseRoutes');
+const userRoute=require("./Routes/userRoutes");
 
 const cors=require('cors');
 const db=require('./DB/mongoDB');
@@ -17,6 +19,8 @@ const db=require('./DB/mongoDB');
 
 app.use(cors());
 app.use('/api',feedbackRoute);
+app.use('/api',CourseRoute);
+app.use('/api',userRoute);
 
 
 

@@ -1,8 +1,8 @@
 .login{
-    max-width:500px;
-    margin: auto;
-    margin-top: 50px;
-    align-items: center;
+
+
+ align-items: center;
+ margin-left: 50px;
   
 
 }
@@ -27,7 +27,7 @@
     
    
 }
-.buttons{
+.Loginbutton{
 padding: 10px;
 align-items: center;
 font-weight: 700;
@@ -36,10 +36,26 @@ margin-right: 1rem;
 background-color: navy;
 width: 100%;
 }
-.imagecontainer{
-    background-image: url('../images/cover5.jpg');
-    background-size: cover;
-  background-attachment: fixed;
+.Loginbutton:hover{
+    color:blue;
+    background-color: black;
+    transition: 1s;
+    box-shadow: 0 0 20px rgba(224, 221, 221, 0.8);
+   
+      scale: 1.1;
+}
 
-    height: 400px;
+.imagecontainer{
+    background-image: url('../images/girl.jpg');
+    background-size: cover;
+    width: 550px; 
+height: 550px; 
+object-fit: cover;
+object-position: 25% 25%; 
+margin-top: 100px;
+
+
+margin-left: "30px";
+/* border: 1px solid blue;  */
+  
 }

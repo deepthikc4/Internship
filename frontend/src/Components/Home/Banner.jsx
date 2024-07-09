@@ -33,7 +33,7 @@ const Banner = () => {
    
   <div className="card-body mycards">
 
-  <i class="fa-solid fa-plus fa-3x fa-fade "></i>
+  <i className="fa-solid fa-plus fa-3x fa-fade "></i>
     <h5 className="card-title " style={{marginTop:"10px"}}>Create</h5>
     <p className="card-text">Craft detailed and comprehensive feedback surveys to assess our training programs. Your input is vital in helping us understand what works and what needs improvement.</p>
     {/* <a href="#" className="btn btn-light readbutton">Read More</a> */}
@@ -46,7 +46,7 @@ const Banner = () => {
    
   <div className="card-body  mycards ">
 
-  <i class="fa-solid fa-square-poll-vertical fa-fade fa-3x "></i>
+  <i className="fa-solid fa-square-poll-vertical fa-fade fa-3x "></i>
     <h5 className="card-title"  style={{marginTop:"10px"}}>Deduce</h5>
     <p className="card-text">Analyze the feedback received to uncover key insights about our training programs. Your feedback helps us identify strengths and areas for improvement, ensuring the highest quality of training.</p>
     {/* <a href="#" className="btn btn-light readbutton ">Read More</a> */}
@@ -60,7 +60,7 @@ const Banner = () => {
  
   <div className="card-body mycards">
 
-  <i class="fa-solid fa-gear  fa-3x fa-fade"></i>
+  <i className="fa-solid fa-gear  fa-3x fa-fade"></i>
     <h5 className="card-title"  style={{marginTop:"10px"}}>Act</h5>
     <p className="card-text">Implement actionable plans based on feedback insights.Our commitment to continuous improvement ensures that every training program gets better with your valuable input.</p>
     {/* <a href="#" className="btn btn-light readbutton">Read More</a> */}
