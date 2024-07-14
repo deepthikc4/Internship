@@ -14,16 +14,17 @@ const Login = () => {
 const handleLogin=(e)=>{
   e.preventDefault();
 axios.post('http://localhost:3005/api/login',{email,password}).then((res)=>{
-
+sessionStorage.setItem('userToken',res.data.token)
 const userrole=res.data.role;
 alert(res.data.Message);
+console.log(res.data.token);
 if(userrole==='trainer')
 {
   
   navigate('/training')
 }
 else{
-  navigate('/')
+  navigate('/iqa')
 }
 })
 .catch((error)=>{
@@ -43,7 +44,7 @@ else{
 
         </div>
 <div className="col-md-5">
-<form className=' login ' onSubmit={handleLogin}>
+<form className=' login ' onSubmit={handleLogin} id='form'>
 <h3 className='text-center p-6' style={{paddingTop:"300px",fontSize:"40px",color:"navy"}}>Login to Your Account</h3>
 <div className="form-group ">
    <i className="fa fa-envelope icon emailicon"></i>
@@ -55,7 +56,8 @@ className="form-control input" id="exampleInputEmail1" aria-describedby="emailHe
   <div className="form-group">
   <i className="fa fa-lock icon passwordicon"></i>
     <input type="password"
-    onChange={(e)=>setpassword(e.target.value)} className="form-control input" id="exampleInputPassword1" placeholder="Password"/>
+    onChange={(e)=>setpassword(e.target.value)} className="form-control input" id="exampleInputPassword1" 
+    placeholder="Password" autoComplete="off"/>
   </div> 
  
   <button type="submit" className="btn  text-light Loginbutton">Submit</button>

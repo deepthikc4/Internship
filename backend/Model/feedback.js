@@ -3,7 +3,7 @@ const mongoose=require('mongoose');
 // create schema
 const feedbackSchema = mongoose.Schema({
     // courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
-    courseId:String,
+    courseId:Number,
     question1: Number,
     question2: Number,
     question3: Number,

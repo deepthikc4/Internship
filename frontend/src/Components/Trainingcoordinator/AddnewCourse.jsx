@@ -1,16 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { TextField } from '@mui/material';
 import CommonFooter from '../Footer/CommonFooter';
 import NavbarTraining from './NavbarTraining';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const AddnewCourse = (props) => {
-  const navigate=useNavigate();
+const AddnewCourse = () => {
+  
 
-const[formdata,setform]=useState(props.data);
+const[formdata,setform]=useState({
+  courseId: '',
+  courseName: '',
+  batchCount: '',
+  startDate: '',
+  endDate: '',
+  trainerName: '',
+  ou: 'Academic', // Default value
+  typeOfTraining: 'LTT', // Default value
+  status: 'Upcoming' // Default value
+});
 
   const [errors, setErrors] = useState({
     courseId: '',
@@ -23,13 +33,36 @@ const[formdata,setform]=useState(props.data);
     typeOfTraining: 'LTT', // Default value
     status: 'Upcoming' // Default value
   });
+  const navigate=useNavigate();
+  const location=useLocation();
 
   const [err, setErr] = useState({});
-
   const inputhandler=(e)=>{
-setform({...formdata,[e.target.name]:e.target.value});
+    setform({...formdata,[e.target.name]:e.target.value});
+    
+      }
 
-  }
+   useEffect(()=>{
+if(location.state!=null)
+{
+  setform({...formdata,courseId:location.state.data.courseId,courseName:location.state.data.courseName,
+    batchCount:location.state.data.batchCount,startDate:location.state.data.startDate,
+    endDate:location.state.data.endDate,trainerName:location.state.data.trainerName,
+    ou:location.state.data.ou,typeOfTraining:location.state.data.typeOfTraining,
+    status:location.state.data.status
+  });
+  
+}
+else{
+  setform({...formdata,courseId:'',courseName:'',
+    batchCount:'',startDate:'',
+    endDate:'', trainerName:'',
+    ou:'', typeOfTraining:'',
+    status:''});
+}
+   },[])
+   
+ 
 
    const validate = () => {
     let tempErrors = {};
@@ -46,7 +79,7 @@ setform({...formdata,[e.target.name]:e.target.value});
     return Object.values(tempErrors).every(x => x === "");
   };
   const addData=()=>{
-if(props.method==='post')
+if(location.state==null)
 {
     if (validate()) {
 
@@ -63,12 +96,12 @@ if(props.method==='post')
   console.log(error)});
   }}
 // update
-if(props.method==='put')
+else
   {
-  axios.put('http://localhost:3005/api/newcourseupdate/'+formdata._id,formdata).then((res)=>{
+  axios.put('http://localhost:3005/api/newcourseupdate/'+location.state.data._id,formdata).then((res)=>{
   alert(res.data.Message);
   console.log(res.data);
-  window.location.reload(false);
+  navigate('/training')
  
   })
   .catch((error)=>{

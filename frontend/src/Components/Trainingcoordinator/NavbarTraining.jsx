@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { Link } from 'react-router-dom';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -53,6 +54,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavbarTraining = () => {
+  const tokenRelease=()=>{
+    sessionStorage.removeItem('userToken');
+  }
   return (
     <div>
         
@@ -80,7 +84,7 @@ const NavbarTraining = () => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          <Button color="inherit"style={{border:"1px solid",margin:"10px",backgroundColor:"navy",color:"white"}}>Logout</Button>
+          <Button color="inherit"style={{border:"1px solid",margin:"10px",backgroundColor:"navy",color:"white"}} onClick={tokenRelease}><Link to={'/'} style={{color:'white',textDecoration:'none'}}>Logout</Link></Button>
         </Toolbar>
       </AppBar>
     </Box>

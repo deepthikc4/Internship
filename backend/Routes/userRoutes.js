@@ -3,6 +3,8 @@ const express=require('express');
 const router=express.Router();
 router.use(express.json());
 const user=require('../Model/user')
+const jwt=require('jsonwebtoken');
+
 
 
 router.post('/login',async(req,res)=>{
@@ -16,7 +18,9 @@ router.post('/login',async(req,res)=>{
     }
     try {
         if(loginuser.password===password){
-            return res.status(200).send({Message:'login successful',role:loginuser.role});
+            let payload={email:email,pwd:password};
+            let token=jwt.sign(payload,'feedbackapp');
+            return res.status(200).send({Message:'login successful',role:loginuser.role,token:token});
         }
         else{
             return res.status(500).send({Message:"password not valid"});
@@ -28,42 +32,3 @@ router.post('/login',async(req,res)=>{
 })
 module.exports=router;
 
-
-// const express=require('express');
-// const router=express.Router();
-// const jwt=require('jsonwebtoken');
-// router.use(express.json());
-
-
-
-
-// // route for login
-
-
-
-// router.post('/login',async(req,res)=>{
-//     let username= req.body.username;
-//     let password =req.body.password;
-
-//     const user = await users.findOne({username:username});
-//     if(!user){
-//         res.json({message:"User not found"});
-//     }
-//     try {
-//        if(user.password== password) {
-//         // send the tokento the frontend
-//         let payload={user:username,pwd:password};
-//         let token=jwt.sign(payload,'reactblogapp');
-//         res.send({message:'login successful',token:token});
-//         // res.json({message:"login successful",user})
-//        }
-//        else{
-//         res.json({message:"Login failed"})
-//        }
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
-
-
-// module.exports=router;

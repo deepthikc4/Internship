@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 // create schema
 const courseSchema = new mongoose.Schema({
-    courseId: String,
+    courseId:Number,
     courseName: String,
     ou: { type: String, enum: ['Academic', 'Corporate', 'Retail', 'Government'] },
     typeOfTraining: { type: String, enum: ['LTT', 'MDT', 'Microskill'] },
@@ -11,7 +11,10 @@ const courseSchema = new mongoose.Schema({
     batchCount: Number,
     trainerName: String,
     status: { type: String, enum: ['Hold', 'Ongoing', 'Completed', 'Cancelled', 'Upcoming'] },
-    finalFeedback: Number,
+    finalFeedback:{
+type:Number,
+default:0
+    }
   });
 
 const courseModel=mongoose.model('course',courseSchema);

@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import AddnewCourse from './AddnewCourse'
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -16,6 +17,7 @@ const NewCourseList = () => {
 const[newCourse,setNewCourse]=useState([]);
 const[selectCourse,setSelectCourse]=useState('');
 const [filteredSub, setFilteredSub] = useState([]);
+const navigate=useNavigate();
 
 
 useEffect(() => {
@@ -23,7 +25,7 @@ useEffect(() => {
 }, []);
 
 const fetchData = () =>{
-  axios.get('http://localhost:3005/api/newcourses').then((res)=>{
+axios.get('http://localhost:3005/api/newcourses').then((res)=>{
 setNewCourse(res.data);
 setFilteredSub(res.data);
   })
@@ -44,10 +46,12 @@ axios.delete('http://localhost:3005/api/removenewcourse/'+id).then((res)=>{
 // updating new Courses
 const [update,setUpdate]=useState(false);
 const[uvalue,setUvalue]=useState([])
+
 const updateCourse=(data)=>{
 console.log(data);
 setUpdate(true);
-setUvalue(data);
+navigate('/addcourse',{state:{data,update}});
+
 }
 
 // filter starts
@@ -64,7 +68,9 @@ const filteredCourses = selectCourse
 
 
 
-  let finalJSX= (
+return (
+  
+
     <div style={{backgroundColor:"#f5f5f5",paddingBottom:"100px"}}>
         <div style={{marginBottom:"50px",textAlign:"center",paddingTop:"50px"}}>
         <h3 style={{color:"navy",fontWeight:"bold"}}>New training programs List</h3>
@@ -123,15 +129,12 @@ const filteredCourses = selectCourse
 
     </div>
   )
-  if(update) finalJSX= <AddnewCourse method='put'data={uvalue}/>
-  return (
-  <div> 
-   
-      
-   {finalJSX} 
   
-   </div>
-   )
 }
 
 export default NewCourseList
+
+
+
+
+

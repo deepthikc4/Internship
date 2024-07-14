@@ -2,7 +2,28 @@ const express=require('express');
 const router=express.Router();
 
 const coursemodel=require('../Model/course');
+const jwt=require('jsonwebtoken');
 router.use(express.json());
+
+// verify token
+function verifytoken(req,res,next){
+    const token=req.headers.token;
+    
+    try {
+        if(!token) throw 'unauthorized access';
+    // extract payload
+    let payload=jwt.verify(token,'feedbackapp');
+    if(!payload)throw 'unauthorized access';
+    
+    next()
+    
+    } catch (error) {
+        res.status(404).send('caught in error');
+    }
+    
+    }
+
+
 // Adding new Course
 
 router.post('/addnewcourse',async(req,res)=>{
@@ -22,7 +43,7 @@ if(addedCourse)
 })
 module.exports=router;
 
-// display New Course List 
+// display NewCourses List 
 
 router.get('/newcourses',async(req,res)=>{
 try {
@@ -75,6 +96,27 @@ router.put('/newcourseupdate/:id',async(req,res)=>{
         res.status(400).json({Message:"Bad request"});
     }
 })
+// Update final feedback score
+
+//     router.put('/addfinalscore/:id',async(req,res)=>{
+//         try {
+//         const id=req.params.id;
+        
+//         const updatedscore = await coursemodel.findOneAndUpdate(
+//             { courseId: id },
+//             { finalFeedback: req.body.finalFeedback },
+//             { new: true } // This option returns the updated document
+//         );
+//         if(!updatedscore){
+//             res.send({Message:"no data found"})
+//         }
+//         res.send({Message:"updated"})
+//         }
+//  catch (error) {
+//     res.send(error);
+// }})
+
+
 
     
 // router.put('/update/:id',async(req,res)=>{
@@ -96,3 +138,4 @@ router.put('/newcourseupdate/:id',async(req,res)=>{
 
 
 
+module.exports=router;
