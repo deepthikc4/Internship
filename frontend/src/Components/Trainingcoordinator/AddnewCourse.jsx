@@ -4,8 +4,8 @@ import Grid from '@mui/material/Grid';
 import { TextField } from '@mui/material';
 import CommonFooter from '../Footer/CommonFooter';
 import NavbarTraining from './NavbarTraining';
-import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axiosInstance from 'E:/NewProject/ICT-Project/frontend/src/axiosinterceptor'
 
 const AddnewCourse = () => {
   
@@ -85,7 +85,7 @@ if(location.state==null)
 
       
   console.log("clicked");
-  axios.post('http://localhost:3005/api/addnewcourse',formdata)
+  axiosInstance.post('http://localhost:3005/api/addnewcourse',formdata)
   .then((res)=>{
   alert(res.data.Message);
   console.log(res.data);
@@ -93,12 +93,21 @@ if(location.state==null)
 
 })
 .catch((error)=>{
-  console.log(error)});
+  if (error.response && error.response.data && error.response.data.Message) {
+    alert(error.response.data.Message);
+  } else {
+    alert('An error occurred while adding the course.');
+  }
+
+}
+
+
+);
   }}
 // update
 else
   {
-  axios.put('http://localhost:3005/api/newcourseupdate/'+location.state.data._id,formdata).then((res)=>{
+  axiosInstance.put('http://localhost:3005/api/newcourseupdate/'+location.state.data._id,formdata).then((res)=>{
   alert(res.data.Message);
   console.log(res.data);
   navigate('/training')
@@ -210,7 +219,7 @@ else
         </Grid>
        
         <Grid item xs={12}>
-       <button variant="contained" onClick={addData} style={{border:"1px solid",borderRadius:"20px",fontSize:"22px",marginLeft:"120px",marginTop:'60px',backgroundColor:"Navy",color:"white",width:"550px",padding:"10px"}} >Add Course</button>
+       <button variant="contained" onClick={addData} style={{border:"1px solid",borderRadius:"20px",fontSize:"22px",marginLeft:"120px",marginTop:'60px',backgroundColor:"Navy",color:"white",width:"550px",padding:"10px"}} >Submit</button>
         </Grid>
       </Grid>
     </Box>

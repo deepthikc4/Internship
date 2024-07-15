@@ -6,11 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import axios from 'axios';
 import { Button } from '@mui/material';
 import AddnewCourse from './AddnewCourse'
 import { useNavigate } from 'react-router-dom';
-
+import axiosInstance from 'E:/NewProject/ICT-Project/frontend/src/axiosinterceptor'
 
 
 const NewCourseList = () => {
@@ -25,7 +24,7 @@ useEffect(() => {
 }, []);
 
 const fetchData = () =>{
-axios.get('http://localhost:3005/api/newcourses').then((res)=>{
+axiosInstance.get('http://localhost:3005/api/newcourses').then((res)=>{
 setNewCourse(res.data);
 setFilteredSub(res.data);
   })
@@ -35,7 +34,7 @@ console.log(error);
 }
 // deleting new courses
 const handleDelete=(id)=>{
-axios.delete('http://localhost:3005/api/removenewcourse/'+id).then((res)=>{
+axiosInstance.delete('http://localhost:3005/api/removenewcourse/'+id).then((res)=>{
   alert(res.data.Message);
   fetchData();
 })

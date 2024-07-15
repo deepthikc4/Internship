@@ -3,7 +3,7 @@ import NavbarTraining from '../Trainingcoordinator/NavbarTraining'
 import image1 from '../images/quality.jfif';
 import image2 from '../images/q2.jfif';
 import image3 from '../images/quality3.jfif';
-import axios from 'axios'
+
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,8 +15,7 @@ import Paper from '@mui/material/Paper';
 import CommonFooter from '../Footer/CommonFooter';
 import { Button } from '@mui/material';
 import CompltedCourse from './CompltedCourse';
-
-import { BarChart } from '@mui/x-charts/BarChart';
+import axiosInstance from 'E:/NewProject/ICT-Project/frontend/src/axiosinterceptor'
 
 const IqaDashboard = () => {
   // handle more button
@@ -34,7 +33,7 @@ const IqaDashboard = () => {
 
     
 // to calculate and update average feeedback score in coursedb
-axios.get('http://localhost:3005/api//update-final-feedback').then((res)=>{
+axiosInstance.get('http://localhost:3005/api//update-final-feedback').then((res)=>{
 console.log(res)
 })
 .catch((error)=>{
@@ -43,7 +42,7 @@ console.log(error);
 
 // to display 10 completed courses
 
-axios.get('http://localhost:3005/api/completedCourse').then((res)=>{
+axiosInstance.get('http://localhost:3005/api/completedCourse').then((res)=>{
 
 setCourse(res.data);
 })
@@ -53,9 +52,7 @@ console.log(error);
 })
 
 }
- const updatefinal=()=>{
-  
- }
+
 // Display full details of course
 
 
@@ -75,11 +72,11 @@ const handleClose = () => {
     <>
     <NavbarTraining/>
     <div>
-      <h2 className='text-center fw-3 mb-3 mt-3' style={{ color: 'navy' }}> Internal QA Feedback Management     
+      <h2 className='text-center fw-3 mb-3 mt-3' style={{ color: 'navy'}}> Internal QA Feedback Management     
       </h2>
-   <div className="container-fluid mt-4">
+   <div className="container-fluid mt-4" style={{ marginLeft:"100px" }}>
 <div className="row">
-<div className="col col-xs-3 col-md-7 col-lg-7">
+<div className="col col-xs-3 col-md-10 col-lg-10">
 
 <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
   <div className="carousel-inner">
@@ -104,40 +101,25 @@ const handleClose = () => {
   </a>
   </div>
 </div>
-{/* Iqa description---Chart */}
 
-<div className="col col-xs-3 col-md-3 col-lg-4">
 
-<BarChart
-      series={[
-        { data: [35, 44, 24, 34] },
-        { data: [51, 6, 49, 30] },
-        { data: [15, 25, 30, 50] },
-        { data: [60, 50, 15, 25] },
-      ]}
-      height={290}
-      xAxis={[{ data: ['Q1', 'Q2', 'Q3', 'Q4'], scaleType: 'band' }]}
-      margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
-    />
-
-</div>
 
 </div>
 
 {/* table
  */}
- <h3 className='text-center mt-3 mb-3'> Program Completion Details</h3>
+ <h3 className=' fw-3 mb-3 mt-3'> Program Completion Details</h3>
  <div className="col col-xs-5 col-md-10 col-lg-10">
 
- <TableContainer component={Paper} style={{backgroundColor:"navy",marginLeft:"100px",padding:"20px"}}>
+ <TableContainer component={Paper} style={{backgroundColor:"navy",padding:"20px"}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell style={{color:"white", fontSize:"20px"}} >No</TableCell>
-            <TableCell style={{color:"white", fontSize:"20px"}} align="right">CourseId</TableCell>
-            <TableCell style={{color:"white",fontSize:"20px"}} align="right">Coursename</TableCell>
-            <TableCell style={{color:"white",fontSize:"20px"}} align="right">Final feedback Score</TableCell>
-            <TableCell style={{color:"white",fontSize:"20px"}} align="right"></TableCell>
+            <TableCell style={{color:"white", fontSize:"20px"}} align="center">CourseId</TableCell>
+            <TableCell style={{color:"white",fontSize:"20px"}} align="center">Coursename</TableCell>
+            <TableCell style={{color:"white",fontSize:"20px"}} align="center">Final feedback Score</TableCell>
+            <TableCell style={{color:"white",fontSize:"20px"}} align="center"></TableCell>
 
           </TableRow>
         </TableHead>
@@ -152,10 +134,10 @@ const handleClose = () => {
                 {index+1}
               </TableCell>
 
-              <TableCell style={{color:"white"}}align="right"> {c.courseId}</TableCell>
-              <TableCell style={{color:"white"}}align="right">{c.courseName}</TableCell>
-              <TableCell style={{color:"white"}} align="right">{c.finalFeedback}</TableCell>             
-              <TableCell style={{color:"white"}} align="right"><Button variant="outlined" onClick={() => handleMoreClick(c)} color="inherit" >More Details</Button></TableCell>
+              <TableCell style={{color:"white"}}align="center"> {c.courseId}</TableCell>
+              <TableCell style={{color:"white"}}align="center">{c.courseName}</TableCell>
+              <TableCell style={{color:"white"}} align="center">{c.finalFeedback}</TableCell>             
+              <TableCell style={{color:"white"}} align="center"><Button variant="outlined" onClick={() => handleMoreClick(c)} color="inherit" >More Details</Button></TableCell>
               {/* <i className="fa-solid fa-eye"></i> */}
             </TableRow>
           ))}

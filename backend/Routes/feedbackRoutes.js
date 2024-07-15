@@ -6,6 +6,27 @@ const course=require('../Model/course');
 router.use(express.json());
 
 
+
+// verify token
+function verifytoken(req,res,next){
+  const token=req.headers.token;
+  
+  try {
+      if(!token) throw 'unauthorized access';
+  // extract payload
+  let payload=jwt.verify(token,'feedbackapp');
+  if(!payload)throw 'unauthorized access';
+  
+  next()
+  
+  } catch (error) {
+      res.status(404).send('caught in error');
+  }
+  
+  }
+
+
+
 // to enter feedback form
 
 
@@ -27,7 +48,7 @@ router.post('/addfeedback',async(req,res)=>{
 
 // calculation final feedback score and update in to coursedb
 
-router.get('/update-final-feedback', async (req, res) => {
+router.get('/update-final-feedback',verifytoken, async (req, res) => {
     try {
       const completedCourses = await course.find({ status: 'Completed' });
       console.log(completedCourses);
@@ -41,7 +62,7 @@ router.get('/update-final-feedback', async (req, res) => {
           console.log(averageFinalFeedback);
        
         if (!isNaN(averageFinalFeedback)) {
-            c.finalFeedback = averageFinalFeedback;
+            c.finalFeedback = Math.round(averageFinalFeedback);
             await c.save();
           }
         }
@@ -58,7 +79,8 @@ router.get('/update-final-feedback', async (req, res) => {
 router.get('/completedCourse',async(req,res)=>{
 
     try {
-        const completed= await course.find({status:'Completed'});
+        const completed= await course.find({status:'Completed'}).sort({ endDate: -1 }).limit(10);
+        
 if(completed.length==0)
 {
     res.status(404).send({Message:"no completed course Found"});
@@ -71,9 +93,16 @@ res.status(200).send(completed)
 
 })
 
+// to get feddbacks when click on more
 
-
-
+router.get('/feedbacks/:courseId', async (req, res) => {
+  try {
+    const feedbacks = await feedback.find({ courseId: req.params.courseId });
+    res.status(200).send(feedbacks);
+  } catch (error) {
+    res.status(500).send({ Message: 'Failed to fetch feedbacks', error });
+  }
+});
 
 
 

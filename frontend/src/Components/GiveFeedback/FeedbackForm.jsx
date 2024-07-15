@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FeedbackNavbar from './FeedbackNavbar';
 import './Feedbackform.css';
 import CommonFooter from '../Footer/CommonFooter';
 
-import axios from 'axios';
+import axiosInstance from 'E:/NewProject/ICT-Project/frontend/src/axiosinterceptor'
+// import axiosInstance from 'axiosInstance';
 import { Rating, Typography } from '@mui/material';
 
 const FeedbackForm = () => {
  
   const [formdata, setform] = useState({});
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get('http://localhost:3005/api/completedCourse')
+      .then((res) => {
+        setCourses(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const inputHandler = (e) => {
    
@@ -26,20 +38,20 @@ const finalFeedback = parseInt(formdata.question1) + parseInt(formdata.question2
 // Include the final feedback in the form data
 const formDataWithFinalFeedback = { ...formdata,finalFeedback };
    
-    axios.post('http://localhost:3005/api/addfeedback', formDataWithFinalFeedback)
+    axiosInstance.post('http://localhost:3005/api/addfeedback', formDataWithFinalFeedback)
       .then((res) => {
         alert(res.data.Message);
         console.log(res.data);
         window.location.href = 'https://www.ictkerala.org';
       })
       .catch((error) => {
-        console.log(error);
+       console.log(error);
       });
   };
 
   // for uppdating final score in courseDb
 //   const updatescore=(courseId,finalFeedback )=>{
-//     axios.put('http://localhost:3005/api/addfinalscore/'+courseId,finalFeedback ).then((res)=>{
+//     axiosInstance.put('http://localhost:3005/api/addfinalscore/'+courseId,finalFeedback ).then((res)=>{
 // console.log(res.data);
 //     })
 //     .catch((error)=>{
@@ -58,8 +70,16 @@ const formDataWithFinalFeedback = { ...formdata,finalFeedback };
           <div className="row feedback">
             <div className="col col-xs-4 col-md-10 col-lg-12">
               <form onSubmit={addData}>
-              <label style={{marginLeft:"60px",marginTop:"50px"}}>Please Enter your completed course id:</label>
-              <input onChange={inputHandler}  name="courseId"   style={{padding:"10px",marginLeft:"50px"}} required />
+              {/* <label style={{marginLeft:"60px",marginTop:"50px"}}>Please Enter your completed course id:</label>
+              <input onChange={inputHandler}  name="courseId"   style={{padding:"10px",marginLeft:"50px"}} required /> */}
+
+              <label style={{ marginLeft: "60px", marginTop: "50px" }}>Please select your completed course:</label>
+                <select name="courseId" onChange={inputHandler} style={{ padding: "10px", marginLeft: "50px" }} required>
+                  <option value="">Select Course</option>
+                  {courses.map((course) => (
+                    <option key={course.courseId} value={course.courseId}>{course.courseId}</option>
+                  ))}
+                </select>
                 <div className='questions'>
                  
                   <Typography component="legend">The training course was relevant and helpful for me to relate.</Typography>

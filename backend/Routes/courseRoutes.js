@@ -26,9 +26,16 @@ function verifytoken(req,res,next){
 
 // Adding new Course
 
-router.post('/addnewcourse',async(req,res)=>{
+router.post('/addnewcourse',verifytoken,async(req,res)=>{
     try {
         const newCourse=req.body;
+
+// checking course id alredy exists or not
+const existingCourse = await coursemodel.findOne({ courseId: newCourse.courseId });
+if (existingCourse) {
+  return res.status(400).send({Message:"Course with this ID already exists" });
+}
+
 const addedCourse=await coursemodel(newCourse).save();
 console.log(addedCourse);
 if(addedCourse)
@@ -41,11 +48,11 @@ if(addedCourse)
 
 
 })
-module.exports=router;
+
 
 // display NewCourses List 
 
-router.get('/newcourses',async(req,res)=>{
+router.get('/newcourses',verifytoken,async(req,res)=>{
 try {
     const newCourses= await coursemodel.find({status: 'Upcoming' }).then((newCourses)=>
    
@@ -61,7 +68,7 @@ try {
 // Delete New Courses
 
 
-router.delete('/removenewcourse/:id',async(req,res)=>{
+router.delete('/removenewcourse/:id',verifytoken,async(req,res)=>{
     try {
        
 const deletecourse=await coursemodel.findByIdAndDelete(req.params.id);
@@ -79,7 +86,7 @@ if(!deletecourse)
 });
 // updating new courses
 
-router.put('/newcourseupdate/:id',async(req,res)=>{
+router.put('/newcourseupdate/:id',verifytoken,async(req,res)=>{
 
     try {
    
